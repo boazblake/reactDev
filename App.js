@@ -5,9 +5,9 @@ class App extends React.Component {
 	constructor(){
 		super();
 		this.state = {
-			red: 0,
-			green: 0,
-			blue: 0
+			red: 128,
+			green: 128,
+			blue: 128
 		}
 		this.update = this.update.bind(this)
 	}
