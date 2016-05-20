@@ -5,49 +5,39 @@ class App extends React.Component {
   	super();
   	this.state = { val: 0 };
   	this.update = this.update.bind(this);
+  	this.state = {increasing: false}
   }
+
   update(){
-  	this.setState({ val: this.state.val +1 })
+  	ReactDOM.render(
+  		<App val={this.props.val + 1} />,
+  		document.querySelector('#app')
+  	);
   }
 
-	componentWillMount(){
-		this.setState({m : 4})
-	}
+  componentWillReceiveProps(nextProps){
+  	this.setState({increasing:nextProps.val > this.props.val})
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return nextProps.val % 5 === 0 ;
+  }
+
   render() {
-  	console.log('rendering!')
-  	return <button onClick={this.update}>{this.state.val * this.state.m}</button>
+  	console.log(this.state.increasing)
+  	return (
+  		<button onClick={this.update}>
+  			{this.props.val}
+  		</button>)
   }
-  componentDidMount(){
-  	console.log(ReactDOM.findDOMNode(this))
-  	this.inc = setInterval(this.update,500)
-  }
-  componentWillUnmount(){
-  	clearInterval(this.inc)
-  }
-}
 
-class Wrapper extends React.Component {
-	constructor(){
-		super();
-	}
-
-	mount(){
-		ReactDOM.render(<App/>, document.querySelector('#a'))
-	}
-
-	unmount(){
-		ReactDOM.unmountComponentAtNode(document.querySelector('#a'))
-	}
-  render(){
-   return(
-   	<div>
-   		<button onClick={this.mount.bind(this)} className='btn btn-success'>MOUNT</button>
-   		<button onClick={this.unmount.bind(this)} className='btn btn-danger'>UNMOUNT</button>
-   		<div id='a'></div>
-   	</div>
-   ) 
+  componentDidUpdate(prevProps, prevState) {
+    console.log('prevProps', prevProps)
+    console.log('prevState', prevState)
   }
 }
 
+App.defaultProps = { val: 0 }
 
-export default Wrapper
+
+export default App
