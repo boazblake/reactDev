@@ -1,73 +1,46 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-
 class App extends React.Component {
-	constructor(){
-		super();
-		this.state = {
-			red: 0,
-		}
-		this.update = this.update.bind(this)
-	}
+    constructor(){
+    	super();
+    	this.state ={data: [
+    		{id: 1, name: 'simon Bailey'},
+    		{id: 2, name: 'thomas burl'},
+    		{id: 3, name: 'will button'},
+    		{id: 4, name: 'ben Blink'},
+    		{id: 5, name: 'kent dodds'},
+    		{id: 6, name: 'trevor ewen'},
+    		{id: 7, name: 'aaron frost'},
+    		{id: 8, name: 'joel hooks'},
+    		{id: 9, name: 'jafar husein'},
+    		{id: 10, name: 'tim kindberg'},
+    		{id: 11, name: 'john linquist'},
+    		{id: 12, name: 'joe maddalone'},
+    		{id: 13, name: 'tyler mcginnis'},
+    		{id: 14, name: 'scoptt moss'},
+    		{id: 15, name: 'rubert penner'},
+    		{id: 16, name: 'keith peters'},
+    		{id: 17, name: 'lucas rubelks'},
+    		{id: 18, name: 'brett shonnenburg'}
+   	 	]}
+	   }
+	   render(){
 
-	update(evt) {
-		this.setState({
-			red: ReactDOM.findDOMNode(this.refs.red.refs.inp).value,
-		})
-	}
-  render(){
-  	return (
-  		<div>
-				<NumInput
-					ref='red'
-					// type='number'
-					label='red'
-					min={0}
-					max={255}
-					step={1}
-					val={+this.state.red}
-					update={this.update} />
-  		</div>
-  	)
-  }
+	   	let rows = this.state.data.map( person => {
+	   		return <PersonRow key={person.id}data={person} />
+	   	})
+
+	   	return <table>
+	   		<tbody>{rows}</tbody>
+	   	</table>
+	}    
 }
 
-class NumInput extends React.Component {
-  render(){
-  	let label = this.props.label !== '' ?
-  	<label>{this.props.label}: {this.props.val} </label> : ''
-    return (
-    	<div>
-    		<input ref='inp'
-    			type={this.props.type}
-    			min={this.props.min}
-    			max={this.props.max}
-    			step={this.props.step}
-    			defaultValue={this.props.val}
-    			onChange={this.props.update} />
-    			{label}
-    	</div>
-    )
-  }
-}
-
-NumInput.propTypes = {
-	min: React.PropTypes.number,
-	max: React.PropTypes.number,
-	step: React.PropTypes.number,
-	val: React.PropTypes.number,
-	label: React.PropTypes.string,
-	update: React.PropTypes.func.isRequired,
-	type:React.PropTypes.oneOf(['number', 'range'])
-}
-
-NumInput.defaultProps = {
-	min: 0,
-	max: 0,
-	step: 1,
-	val: 0,
-	label: '',
-	type: 'range'
+const PersonRow = (props) =>
+{
+	return <tr>
+		<td>{props.data.id}</td>
+		<td>{props.data.name}</td>
+	</tr>
 }
 
 export default App
